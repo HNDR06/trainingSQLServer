@@ -2,58 +2,35 @@
 Bulan
 Total Penjualan Bulanan
 Indikasi apakah bulan tersebut memiliki penjualan tertinggi ("Ya" atau "Tidak").
-/*
- * with cte
- * select total sales
- * select bulan, total penjualan, case when MAX 
- * tablesalesselect*sum,date,
 tablesalesdate
-*/
-WITH SalesCTE AS (
-	SELECT SUM(Amount) as totalx,FORMAT(SaleDate,'yyyyMM') as BulanWaktu FROM Sales GROUP BY FORMAT(SaleDate,'yyyyMM')
-	),
-	MaxCTE AS (
-	SELECT MAX(totalx)
-	as MaxTotalSales FROM SalesCTE
-	)
-	
-	SELECT 
-	BulanWaktu,totalx,
-	CASE 
-		WHEN totalx = (SELECT MaxTotalSales FROM MaxCTE) THEN
-		'YA'
-		ELSE
-		'TIDAK'
-	END
-	
-FROM SalesCTE
+
+WITH CTE1 AS (
+	SELECT SUM(Amount) AS Jumlah,FORMAT(SaleDate,'yyyyMM') as Date FROM Sales s
+	GROUP BY FORMAT(SaleDate,'yyyyMM')
+),
+CTE2 AS (
+	SELECT MAX(Jumlah) As Max FROM CTE1
+)
+SELECT *,
+CASE 
+	WHEN Jumlah = (SELECT Max FROM CTE2) THEN
+	'YA'
+	ELSE
+	'TIDAK'
+END
+AS MaxTinggi
+FROM CTE1
 
 2.Buatlah sebuah query untuk menghitung total penjualan per karyawan, termasuk hanya karyawan yang memiliki penjualan lebih besar dari rata-rata semua penjualan.
+
 WITH CTE1 AS (
-	SELECT 
-	p.EmployeeID,
-	p.Name,
-	SUM(e.SaleAmount) as total1
-	FROM SalesEmployees p
-	INNER JOIN EmployeeSales e
-	ON p.EmployeeID = e.EmployeeID
-	GROUP BY p.EmployeeID,Name
+	SELECT se.EmployeeID,se.Name,SUM(SaleAmount) AS Total FROM SalesEmployees se
+	INNER JOIN EmployeeSales es 
+	ON se.EmployeeID = es.EmployeeID
+	GROUP BY se.EmployeeID,se.Name
 ),
 	CTE2 AS (
-	SELECT AVG(total1) as rata FROM CTE1
-	)
-	
-SELECT EmployeeID,Name,total1 FROM CTE1
-WHERE total1 > (SELECT rata FROM CTE2)
-
-SELECT * FROM CTE1
-
-3. CTE: Buat query untuk menghitung total stok per kategori menggunakan CTE.
-/*table produk
- * Kategorui total stok > 20
- * 
- */
-WITH TesCTE AS (
-select SUM(Stok) as Stok1 from Produk GROUP BY Kategori
+	SELECT AVG(Total) AS Rata FROM CTE1 es
 )
-select * from TesCTE
+SELECT * FROM CTE1 
+WHERE Total > (SELECT Rata FROM CTE2)
