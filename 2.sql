@@ -1,35 +1,44 @@
 1. Cari nama belakang "Doe":
+
+SELECT * FROM Employees e WHERE FullName LIKE '%DOE'
+
 2. Cari JobTitle yang mengandung "Developer":
+
+SELECT * FROM Employees e WHERE JobTitle LIKE '%Developer%' 
+
 3. Cari email yang diakhiri "example.com":
-tableemployees
-
-4. Temukan semua produk yang memiliki kata pertama "Laptop" di ProductName.
-5. Cari produk dengan nama yang dimulai dengan huruf "S".
-6. Temukan produk dengan harga di atas 1000 dan nama mengandung "Pro".
-tableproducts
-
-7. Cari pelanggan yang nama depannya dimulai dengan huruf "A" menggunakan LEFT.
-8. Cari pelanggan yang memiliki titik (.) dalam alamat email menggunakan CHARINDEX.
-9. Cari pelanggan yang nomor teleponnya berisi "1234" menggunakan PATINDEX.
-tablecustomers
-
-SELECT * FROM Employees e WHERE e.FullName LIKE '%Doe'
-
-SELECT * FROM Employees e WHERE JobTitle LIKE '%Developer%'
 
 SELECT * FROM Employees e WHERE Email LIKE '%example.com'
 
-SELECT * FROM products e WHERE ProductName LIKE 'Laptop%'
+tableemployees
 
-SELECT * FROM products e WHERE ProductName LIKE 'S%'
+4. Temukan semua produk yang memiliki kata pertama "Laptop" di ProductName.
 
-SELECT * FROM products e WHERE Price > 1000 AND ProductName LIKE '%Pro%'
+SELECT * FROM Products p WHERE ProductName LIKE 'Laptop%'
 
-SELECT LEFT(FullName,5 ) as NamaPotong FROM Customers c WHERE FullName LIKE 'A%'
+5. Cari produk dengan nama yang dimulai dengan huruf "S".
 
-SELECT * ,CHARINDEX('.',Email) as IndexEmailEdit FROM Customer c WHERE EMAIL LIKE '.'
+SELECT * FROM Products p WHERE ProductName LIKE '%S%'
 
-SELECT * ,PATINDEX('%1234%',PhoneNumber) as PhoneNumberlEdit FROM Customer c WHERE PhoneNumber LIKE '%1234%'
+6. Temukan produk dengan harga di atas 1000 dan nama mengandung "Pro".
+
+SELECT * FROM Products p WHERE Price > 1000 AND ProductName LIKE '%Pro%'
+
+tableproducts
+
+7. Cari pelanggan yang nama depannya dimulai dengan huruf "A" menggunakan LEFT.
+
+SELECT *,LEFT(FullName,5) AS potong FROM Customers c WHERE FullName LIKE 'A%'
+
+8. Cari pelanggan yang memiliki titik (.) dalam alamat email menggunakan CHARINDEX.
+
+SELECT * FROM Customers c WHERE CHARINDEX('.',Email) > 0
+
+9. Cari pelanggan yang nomor teleponnya berisi "1234" menggunakan PATINDEX.
+
+SELECT * FROM Customers c WHERE PATINDEX('%1234%',PhoneNumber) > 0
+
+tablecustomers
 
 
 
