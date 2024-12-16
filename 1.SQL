@@ -14,8 +14,8 @@ Soal:
 Tampilkan TanggalTransaksi dalam format DD-MMM-YYYY HH:MM:SS AM/PM dan hitung jumlah hari hingga tanggal saat ini.
 TableTransaksi
 
-SELECT FORMAT(TanggalTransaksi,'dd-MM-yyyy HH:MM:ss tt') from Transaksi
-SELECT DATEDIFF(DAY,TanggalTransaksi,GETDATE()) AS BedaHari FROM Transaksi
+SELECT FORMAT(TanggalTransaksi,'dd-MM-yyyy HH:MM:SS tt')
+FROM Transaksi t
 
 
 3. Kalkulasi dengan Fungsi Waktu
@@ -23,8 +23,7 @@ Soal:
 Hitung total jam kerja setiap karyawan dalam format XX jam YY menit.
 TablePresensi
 
-SELECT FORMAT((JamKeluar - JamMasuk, 'HH:MM')  as Durasi FROM Presensi 
-
-SELECT * from Presensi p 
-
-
+SELECT 
+DATEDIFF(MINUTE,JamMasuk ,JamKeluar) / 60 as Jam, 
+DATEDIFF(MINUTE,JamMasuk ,JamKeluar) % 60 as Menit 
+FROM Presensi p
