@@ -14,13 +14,7 @@ ON r.RoomID = b.RoomID
 
 3.Validasi Ketersediaan Kamar Sebelum Pemesanan Tulis query untuk memeriksa apakah kamar tertentu tersedia pada rentang tanggal tertentu.
 
-DECLARE @roomid INT;
-DECLARE @chekin DATE;
-DECLARE @chekout DATE;
-
-SET @roomid = 1;
-SET @chekin='2024-12-19';
-SET @chekout='2024-12-19';
+DECLARE @roomid INT = 1, @chekin DATE = '2024-12-19', @chekout DATE = '2024-12-19';
 
 IF EXISTS(
 SELECT * FROM Bookings b WHERE RoomID = @roomid AND (@chekin BETWEEN CheckInDate AND CheckOutDate) OR (@chekout BETWEEN CheckInDate AND CheckOutDate)
