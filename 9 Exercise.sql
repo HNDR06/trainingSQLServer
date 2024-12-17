@@ -63,7 +63,7 @@ CREATE PROCEDURE UpdateEmployeeSalaryHendra
 @NewSalary DECIMAL
 AS
 BEGIN
-UPDATE Employees e SET Salary = @NewSalary WHERE EmployeeID = @EmployeeID
+UPDATE Employees SET Salary = @NewSalary WHERE EmployeeID = @EmployeeID
 END;
 
 EXEC UpdateEmployeeSalaryHendra @EmployeeID = 100, @NewSalary = 7500;
