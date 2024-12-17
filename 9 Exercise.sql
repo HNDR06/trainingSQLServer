@@ -66,7 +66,9 @@ BEGIN
 UPDATE Employees SET Salary = @NewSalary WHERE EmployeeID = @EmployeeID
 END;
 
-EXEC UpdateEmployeeSalaryHendra @EmployeeID = 100, @NewSalary = 7500;
+EXEC UpdateEmployeeSalaryHendra @EmployeeID = 99, @NewSalary = 7500;
+
+SELECT * FROM Employees e WHERE EmployeeID = 99
 
 CREATE NONCLUSTERED INDEX
 IX_Employees_JobTitle ON Employees(JobTitle);
